@@ -38,28 +38,28 @@ Primer React 的主题系统基于 **设计令牌（Design Tokens）** 实现，
 ```mermaid
 graph TB
     subgraph 语义层["语义层（Semantic Layer）"]
-        S1["--bgColor-default"] 
+        S1["--bgColor-default"]
         S2["--fgColor-muted"]
         S3["--borderColor-default"]
     end
-    
+
     subgraph 功能层["功能层（Functional Layer）"]
         F1["--bgColor-accent-emphasis"]
         F2["--control-medium-size"]
         F3["--button-primary-bgColor-rest"]
     end
-    
+
     subgraph 原始层["原始层（Primitive Layer）"]
         P1["gray-900: #1f2328"]
         P2["blue-500: #0969da"]
         P3["space-3: 16px"]
     end
-    
+
     S1 --> P1
     S2 --> P1
     F1 --> P2
     F2 --> P3
-    
+
     style S1 fill:#0969da,color:#fff
     style S2 fill:#0969da,color:#fff
     style S3 fill:#0969da,color:#fff
@@ -68,11 +68,11 @@ graph TB
     style F3 fill:#8250df,color:#fff
 ```
 
-| 层级 | 说明 | 示例 | 特点 |
-|------|------|------|------|
-| 🔵 语义层 | 表达"用途" | `--bgColor-default` | 与主题无关，切换主题时自动映射 |
-| 🟣 功能层 | 表达"组件状态" | `--button-primary-bgColor-rest` | 组件级别的令牌 |
-| ⚪ 原始层 | 具体数值 | `gray-900: #1f2328` | 主题特定的硬编码值 |
+| 层级      | 说明           | 示例                            | 特点                           |
+| --------- | -------------- | ------------------------------- | ------------------------------ |
+| 🔵 语义层 | 表达"用途"     | `--bgColor-default`             | 与主题无关，切换主题时自动映射 |
+| 🟣 功能层 | 表达"组件状态" | `--button-primary-bgColor-rest` | 组件级别的令牌                 |
+| ⚪ 原始层 | 具体数值       | `gray-900: #1f2328`             | 主题特定的硬编码值             |
 
 ### ThemeProvider 使用详解
 
@@ -82,10 +82,10 @@ import {ThemeProvider, BaseStyles} from '@primer/react'
 function App() {
   return (
     <ThemeProvider
-      colorMode="auto"       // 'auto' | 'day' | 'night'
-      dayScheme="light"      // 亮色方案
-      nightScheme="dark"     // 暗色方案
-      preventSSRMismatch     // 防止 SSR 水合不匹配
+      colorMode="auto" // 'auto' | 'day' | 'night'
+      dayScheme="light" // 亮色方案
+      nightScheme="dark" // 暗色方案
+      preventSSRMismatch // 防止 SSR 水合不匹配
     >
       <BaseStyles>
         <MyApp />
@@ -97,11 +97,11 @@ function App() {
 
 **colorMode 选项说明**：
 
-| 值 | 行为 |
-|----|------|
-| `'auto'` | 跟随系统偏好（`prefers-color-scheme`） |
-| `'day'` | 强制使用 dayScheme |
-| `'night'` | 强制使用 nightScheme |
+| 值        | 行为                                   |
+| --------- | -------------------------------------- |
+| `'auto'`  | 跟随系统偏好（`prefers-color-scheme`） |
+| `'day'`   | 强制使用 dayScheme                     |
+| `'night'` | 强制使用 nightScheme                   |
 
 **在组件中使用主题**：
 
@@ -114,9 +114,7 @@ function MyComponent() {
   return (
     <div>
       <p>当前模式: {colorMode}</p>
-      <button onClick={() => setColorMode('night')}>
-        切换到暗色
-      </button>
+      <button onClick={() => setColorMode('night')}>切换到暗色</button>
     </div>
   )
 }
@@ -127,11 +125,7 @@ function MyComponent() {
 ThemeProvider 会在 DOM 元素上设置 `data-*` 属性，CSS 变量通过这些属性激活：
 
 ```html
-<div
-  data-color-mode="auto"
-  data-light-theme="light"
-  data-dark-theme="dark"
->
+<div data-color-mode="auto" data-light-theme="light" data-dark-theme="dark">
   <!-- CSS 变量在这里生效 -->
   <!-- 例如 --bgColor-default 在 light 主题下为 #ffffff -->
   <!-- 在 dark 主题下自动变为 #0d1117 -->
@@ -153,15 +147,15 @@ graph LR
     subgraph 编写["开发者编写"]
         A[".Button { color: blue }"]
     end
-    
+
     subgraph 编译["构建工具编译"]
         B["生成唯一类名<br/>.prc-Button-Container-cBBI"]
     end
-    
+
     subgraph 运行["浏览器运行"]
         C["样式天然隔离<br/>不会与其他 .Button 冲突"]
     end
-    
+
     A --> B --> C
 ```
 
@@ -169,13 +163,13 @@ CSS Modules 是一种 CSS 文件约定：每个 `.module.css` 文件中的类名
 
 #### 为什么选择 CSS Modules？
 
-| 维度 | styled-components | CSS Modules | 差距 |
-|------|-------------------|-------------|------|
-| 初始渲染（1000 个组件） | 242ms | 96ms | 快 **60%** |
-| SSR 渲染开销 | +450ms | 0ms | 快 **20%** |
-| 动态样式更新 | 400ms | 165ms | 快 **60%** |
-| 是否阻塞渲染 | 是（运行时注入） | 否（预编译 CSS） | - |
-| Bundle 大小影响 | 包含 runtime | 纯 CSS，无 runtime | 更小 |
+| 维度                    | styled-components | CSS Modules        | 差距       |
+| ----------------------- | ----------------- | ------------------ | ---------- |
+| 初始渲染（1000 个组件） | 242ms             | 96ms               | 快 **60%** |
+| SSR 渲染开销            | +450ms            | 0ms                | 快 **20%** |
+| 动态样式更新            | 400ms             | 165ms              | 快 **60%** |
+| 是否阻塞渲染            | 是（运行时注入）  | 否（预编译 CSS）   | -          |
+| Bundle 大小影响         | 包含 runtime      | 纯 CSS，无 runtime | 更小       |
 
 > **类比**：styled-components 像是"现场裁缝"——每次穿衣服都要现裁现做；CSS Modules 像是"成衣店"——衣服提前做好，穿上就走。
 
@@ -190,11 +184,7 @@ import {clsx} from 'clsx'
 
 function Button({variant = 'default', size = 'medium', className, children}) {
   return (
-    <button
-      className={clsx(classes.Button, className)}
-      data-variant={variant}
-      data-size={size}
-    >
+    <button className={clsx(classes.Button, className)} data-variant={variant} data-size={size}>
       {children}
     </button>
   )
@@ -235,12 +225,16 @@ function Button({variant = 'default', size = 'medium', className, children}) {
 
 ```css
 /* ✅ 推荐 */
-.ButtonBase { }
-.LeadingVisual { }
+.ButtonBase {
+}
+.LeadingVisual {
+}
 
 /* ❌ 不推荐 */
-.button-base { }
-.leading-visual { }
+.button-base {
+}
+.leading-visual {
+}
 ```
 
 原因：避免 CSS 中需要转义的字符（如 `-`），同时与 React 组件命名风格保持一致。
@@ -283,91 +277,91 @@ Primer React 的 60+ 组件可以按用途分为以下类别：
 
 用于页面整体结构和空间分配。
 
-| 组件 | 用途 | 示例场景 |
-|------|------|---------|
-| `PageLayout` | 页面级布局 | 带侧边栏的页面 |
-| `SplitPageLayout` | 分屏布局 | 左右分栏的详情页 |
-| `Stack` | 弹性堆叠布局 | 垂直/水平排列元素 |
-| `PageHeader` | 页面头部 | 标题 + 操作按钮区域 |
+| 组件              | 用途         | 示例场景            |
+| ----------------- | ------------ | ------------------- |
+| `PageLayout`      | 页面级布局   | 带侧边栏的页面      |
+| `SplitPageLayout` | 分屏布局     | 左右分栏的详情页    |
+| `Stack`           | 弹性堆叠布局 | 垂直/水平排列元素   |
+| `PageHeader`      | 页面头部     | 标题 + 操作按钮区域 |
 
 ### 表单组件（Forms）
 
 用于用户输入和数据收集。
 
-| 组件 | 用途 |
-|------|------|
-| `TextInput` | 文本输入框 |
-| `Textarea` | 多行文本输入 |
-| `Select` | 下拉选择 |
-| `Checkbox` / `Radio` | 复选/单选 |
-| `CheckboxGroup` / `RadioGroup` | 复选/单选组 |
-| `FormControl` | 表单控件容器（标签 + 输入 + 提示） |
-| `ToggleSwitch` | 开关切换 |
+| 组件                           | 用途                               |
+| ------------------------------ | ---------------------------------- |
+| `TextInput`                    | 文本输入框                         |
+| `Textarea`                     | 多行文本输入                       |
+| `Select`                       | 下拉选择                           |
+| `Checkbox` / `Radio`           | 复选/单选                          |
+| `CheckboxGroup` / `RadioGroup` | 复选/单选组                        |
+| `FormControl`                  | 表单控件容器（标签 + 输入 + 提示） |
+| `ToggleSwitch`                 | 开关切换                           |
 
 ### 按钮与操作（Buttons & Actions）
 
-| 组件 | 用途 |
-|------|------|
-| `Button` | 通用按钮 |
-| `IconButton` | 图标按钮 |
-| `LinkButton` | 链接样式按钮 |
-| `ButtonGroup` | 按钮组 |
+| 组件          | 用途         |
+| ------------- | ------------ |
+| `Button`      | 通用按钮     |
+| `IconButton`  | 图标按钮     |
+| `LinkButton`  | 链接样式按钮 |
+| `ButtonGroup` | 按钮组       |
 
 ### 导航组件（Navigation）
 
-| 组件 | 用途 |
-|------|------|
-| `NavList` | 侧边导航列表 |
+| 组件           | 用途           |
+| -------------- | -------------- |
+| `NavList`      | 侧边导航列表   |
 | `UnderlineNav` | 下划线标签导航 |
-| `Breadcrumbs` | 面包屑导航 |
-| `TabNav` | 标签页导航 |
+| `Breadcrumbs`  | 面包屑导航     |
+| `TabNav`       | 标签页导航     |
 
 ### 叠加层组件（Overlays）
 
-| 组件 | 用途 |
-|------|------|
-| `Dialog` | 对话框/模态框 |
-| `ActionMenu` | 操作菜单（下拉菜单） |
-| `Tooltip` | 工具提示 |
-| `AnchoredOverlay` | 锚定浮层 |
+| 组件              | 用途                 |
+| ----------------- | -------------------- |
+| `Dialog`          | 对话框/模态框        |
+| `ActionMenu`      | 操作菜单（下拉菜单） |
+| `Tooltip`         | 工具提示             |
+| `AnchoredOverlay` | 锚定浮层             |
 
 ### 列表与数据（Lists & Data）
 
-| 组件 | 用途 |
-|------|------|
-| `ActionList` | 可操作列表 |
-| `DataTable` | 数据表格 |
-| `TreeView` | 树形视图 |
+| 组件                 | 用途             |
+| -------------------- | ---------------- |
+| `ActionList`         | 可操作列表       |
+| `DataTable`          | 数据表格         |
+| `TreeView`           | 树形视图         |
 | `FilteredActionList` | 可筛选的操作列表 |
 
 ### 反馈组件（Feedback）
 
-| 组件 | 用途 |
-|------|------|
-| `Banner` | 横幅通知 |
-| `Flash` | 闪现消息 |
-| `Spinner` | 加载指示器 |
-| `ProgressBar` | 进度条 |
+| 组件          | 用途       |
+| ------------- | ---------- |
+| `Banner`      | 横幅通知   |
+| `Flash`       | 闪现消息   |
+| `Spinner`     | 加载指示器 |
+| `ProgressBar` | 进度条     |
 
 ### 展示组件（Display）
 
-| 组件 | 用途 |
-|------|------|
-| `Avatar` / `AvatarStack` | 用户头像 |
-| `Label` / `CounterLabel` | 标签/计数器 |
-| `StateLabel` | 状态标签（Open/Closed） |
-| `RelativeTime` | 相对时间展示 |
-| `Blankslate` | 空状态占位 |
-| `Truncate` | 文本截断 |
+| 组件                     | 用途                    |
+| ------------------------ | ----------------------- |
+| `Avatar` / `AvatarStack` | 用户头像                |
+| `Label` / `CounterLabel` | 标签/计数器             |
+| `StateLabel`             | 状态标签（Open/Closed） |
+| `RelativeTime`           | 相对时间展示            |
+| `Blankslate`             | 空状态占位              |
+| `Truncate`               | 文本截断                |
 
 ### 工具组件（Utility）
 
-| 组件 | 用途 |
-|------|------|
-| `Box` | 通用容器 |
-| `Text` | 文本容器 |
-| `Heading` | 标题 |
-| `Link` | 链接 |
+| 组件             | 用途                       |
+| ---------------- | -------------------------- |
+| `Box`            | 通用容器                   |
+| `Text`           | 文本容器                   |
+| `Heading`        | 标题                       |
+| `Link`           | 链接                       |
 | `VisuallyHidden` | 视觉隐藏（屏幕阅读器可见） |
 
 ---
@@ -376,14 +370,14 @@ Primer React 的 60+ 组件可以按用途分为以下类别：
 
 Primer React 提供了丰富的 Hooks 用于行为复用：
 
-| Hook | 用途 |
-|------|------|
-| `useTheme` | 获取/修改主题配置 |
-| `useResponsiveValue` | 根据视口宽度返回不同值 |
-| `useOverlay` | 管理浮层的显示/隐藏 |
-| `useFocusTrap` | 焦点陷阱（焦点不会离开指定区域） |
-| `useFocusZone` | 焦点区域管理（方向键导航） |
-| `useAnchoredPosition` | 计算锚定元素的位置 |
+| Hook                  | 用途                             |
+| --------------------- | -------------------------------- |
+| `useTheme`            | 获取/修改主题配置                |
+| `useResponsiveValue`  | 根据视口宽度返回不同值           |
+| `useOverlay`          | 管理浮层的显示/隐藏              |
+| `useFocusTrap`        | 焦点陷阱（焦点不会离开指定区域） |
+| `useFocusZone`        | 焦点区域管理（方向键导航）       |
+| `useAnchoredPosition` | 计算锚定元素的位置               |
 
 ### useResponsiveValue 示例
 
@@ -394,7 +388,7 @@ function ResponsiveComponent() {
   // 根据屏幕宽度返回不同值
   const columns = useResponsiveValue(
     {narrow: 1, regular: 2, wide: 3},
-    1 // 默认值
+    1, // 默认值
   )
 
   return <div style={{columns}}>...</div>
@@ -450,13 +444,13 @@ TypeScript 会根据 `as` prop 的值自动推断可用的属性：
 
 ## ✅ 本章小结
 
-| 概念 | 核心要点 |
-|------|---------|
-| 主题系统 | 基于 CSS 变量的三层设计令牌，支持亮/暗/自动模式 |
-| 样式方案 | CSS Modules（编译时）替代 styled-components（运行时），性能提升 60% |
-| 组件分类 | 9 大类 60+ 组件，覆盖布局、表单、导航、叠加层等场景 |
-| Hooks | 提供主题、响应式、焦点管理等行为复用能力 |
-| TypeScript | 完整类型定义，多态组件支持自动类型推断 |
+| 概念       | 核心要点                                                            |
+| ---------- | ------------------------------------------------------------------- |
+| 主题系统   | 基于 CSS 变量的三层设计令牌，支持亮/暗/自动模式                     |
+| 样式方案   | CSS Modules（编译时）替代 styled-components（运行时），性能提升 60% |
+| 组件分类   | 9 大类 60+ 组件，覆盖布局、表单、导航、叠加层等场景                 |
+| Hooks      | 提供主题、响应式、焦点管理等行为复用能力                            |
+| TypeScript | 完整类型定义，多态组件支持自动类型推断                              |
 
 ---
 

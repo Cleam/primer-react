@@ -13,9 +13,9 @@ graph LR
     A[团队 A 的按钮] -->|样式不一致| P[用户困惑]
     B[团队 B 的按钮] -->|交互不一致| P
     C[团队 C 的按钮] -->|无障碍缺失| P
-    
+
     D[Primer React] -->|统一组件库| S[一致的用户体验]
-    
+
     style D fill:#0969da,color:#fff
     style S fill:#1a7f37,color:#fff
     style P fill:#cf222e,color:#fff
@@ -23,11 +23,11 @@ graph LR
 
 **设计系统（Design System）** 就是解决这类问题的方案。你可以把它理解为一本"UI 字典"：
 
-| 类比 | 设计系统 |
-|------|---------|
-| 📖 字典定义了词语的含义 | 设计系统定义了 UI 组件的样式和行为 |
-| 📝 语法规则确保句子通顺 | 设计规范确保界面一致 |
-| 🎨 字体风格让文字可读 | 设计令牌（Design Tokens）让界面美观 |
+| 类比                    | 设计系统                            |
+| ----------------------- | ----------------------------------- |
+| 📖 字典定义了词语的含义 | 设计系统定义了 UI 组件的样式和行为  |
+| 📝 语法规则确保句子通顺 | 设计规范确保界面一致                |
+| 🎨 字体风格让文字可读   | 设计令牌（Design Tokens）让界面美观 |
 
 **Primer React** 就是 GitHub 的"UI 字典"，它提供：
 
@@ -82,10 +82,10 @@ function App() {
 
 **为什么需要这两个组件？**
 
-| 组件 | 作用 | 类比 |
-|------|------|------|
+| 组件            | 作用                                         | 类比                           |
+| --------------- | -------------------------------------------- | ------------------------------ |
 | `ThemeProvider` | 提供主题上下文（颜色、字体、间距等设计令牌） | 就像给整个应用"穿上统一的校服" |
-| `BaseStyles` | 应用全局基础样式（重置浏览器默认样式） | 就像"铺好画布"再开始画画 |
+| `BaseStyles`    | 应用全局基础样式（重置浏览器默认样式）       | 就像"铺好画布"再开始画画       |
 
 ### 第一个组件
 
@@ -196,15 +196,15 @@ npm start
 
 ### 常用命令速查
 
-| 命令 | 作用 | 预计耗时 |
-|------|------|---------|
-| `npm install` | 安装依赖 | ~5 秒（有缓存）/ ~2 分钟（首次） |
-| `npm run build` | 构建所有包 | ~90 秒 |
-| `npm start` | 启动 Storybook | ~3 秒 |
-| `npm test` | 运行单元测试 | ~75 秒 |
-| `npm run type-check` | TypeScript 类型检查 | ~42 秒 |
-| `npm run lint` | 代码风格检查 | ~73 秒 |
-| `npm run format` | 代码格式化 | 数秒 |
+| 命令                 | 作用                | 预计耗时                         |
+| -------------------- | ------------------- | -------------------------------- |
+| `npm install`        | 安装依赖            | ~5 秒（有缓存）/ ~2 分钟（首次） |
+| `npm run build`      | 构建所有包          | ~90 秒                           |
+| `npm start`          | 启动 Storybook      | ~3 秒                            |
+| `npm test`           | 运行单元测试        | ~75 秒                           |
+| `npm run type-check` | TypeScript 类型检查 | ~42 秒                           |
+| `npm run lint`       | 代码风格检查        | ~73 秒                           |
+| `npm run format`     | 代码格式化          | 数秒                             |
 
 ---
 
@@ -254,9 +254,7 @@ function FormExample() {
       <FormControl>
         <FormControl.Label>用户名</FormControl.Label>
         <TextInput placeholder="输入用户名" />
-        <FormControl.Caption>
-          用户名将公开显示
-        </FormControl.Caption>
+        <FormControl.Caption>用户名将公开显示</FormControl.Caption>
       </FormControl>
 
       <FormControl>
@@ -288,12 +286,8 @@ function MenuExample() {
       <ActionMenu.Button>操作</ActionMenu.Button>
       <ActionMenu.Overlay>
         <ActionList>
-          <ActionList.Item onSelect={() => console.log('编辑')}>
-            编辑
-          </ActionList.Item>
-          <ActionList.Item onSelect={() => console.log('复制')}>
-            复制
-          </ActionList.Item>
+          <ActionList.Item onSelect={() => console.log('编辑')}>编辑</ActionList.Item>
+          <ActionList.Item onSelect={() => console.log('复制')}>复制</ActionList.Item>
           <ActionList.Divider />
           <ActionList.Item variant="danger" onSelect={() => console.log('删除')}>
             删除
@@ -327,12 +321,12 @@ import {LegacyComponent} from '@primer/react/deprecated'
 import {NextComponent} from '@primer/react/next'
 ```
 
-| 层级 | 导入路径 | 说明 |
-|------|---------|------|
-| 稳定版 | `@primer/react` | 生产环境推荐使用 |
+| 层级   | 导入路径                     | 说明                         |
+| ------ | ---------------------------- | ---------------------------- |
+| 稳定版 | `@primer/react`              | 生产环境推荐使用             |
 | 实验性 | `@primer/react/experimental` | 新组件试验阶段，API 可能变更 |
-| 废弃 | `@primer/react/deprecated` | 已废弃，提供迁移期 |
-| 下一代 | `@primer/react/next` | 正在替代旧版的新实现 |
+| 废弃   | `@primer/react/deprecated`   | 已废弃，提供迁移期           |
+| 下一代 | `@primer/react/next`         | 正在替代旧版的新实现         |
 
 ### 核心依赖关系
 
@@ -342,10 +336,10 @@ graph TB
     PR --> PO[🔷 @primer/octicons-react<br/>图标库]
     PR --> PB[⚙️ @primer/behaviors<br/>行为工具]
     PR --> PC[📐 @primer/css<br/>基础 CSS]
-    
+
     PP --> CSS[CSS 变量<br/>颜色/间距/字体]
     PB --> HOOKS[焦点管理<br/>键盘导航]
-    
+
     style PR fill:#0969da,color:#fff
     style PP fill:#8250df,color:#fff
     style PO fill:#1a7f37,color:#fff

@@ -16,12 +16,12 @@ graph TB
         C[📦 Slot 模式<br/>Slot Pattern]
         D[🔗 Context 通信<br/>Context Communication]
     end
-    
+
     A --> E[ActionList, ActionMenu<br/>FormControl, Dialog]
     B --> F[Button as Link<br/>Box as section]
     C --> G[useSlots Hook<br/>子组件插槽]
     D --> H[ListContext<br/>ItemContext]
-    
+
     style A fill:#0969da,color:#fff
     style B fill:#8250df,color:#fff
     style C fill:#1a7f37,color:#fff
@@ -39,14 +39,18 @@ graph TB
 **类比**：就像 HTML 的 `<select>` 和 `<option>` ——它们分别没有意义，组合起来才是完整的下拉选择器。
 
 ```tsx
-{/* HTML 的复合模式 */}
-<select>
+{
+  /* HTML 的复合模式 */
+}
+;<select>
   <option>选项 A</option>
   <option>选项 B</option>
 </select>
 
-{/* Primer React 的复合模式 */}
-<ActionList>
+{
+  /* Primer React 的复合模式 */
+}
+;<ActionList>
   <ActionList.Item>选项 A</ActionList.Item>
   <ActionList.Item>选项 B</ActionList.Item>
 </ActionList>
@@ -57,22 +61,20 @@ graph TB
 ```tsx
 <ActionList>
   <ActionList.Heading>用户操作</ActionList.Heading>
-  
+
   <ActionList.Item>
     <ActionList.LeadingVisual>
       <Avatar src="avatar.png" />
     </ActionList.LeadingVisual>
     用户名
-    <ActionList.Description>
-      这是一段描述文字
-    </ActionList.Description>
+    <ActionList.Description>这是一段描述文字</ActionList.Description>
     <ActionList.TrailingVisual>
       <CounterLabel>12</CounterLabel>
     </ActionList.TrailingVisual>
   </ActionList.Item>
-  
+
   <ActionList.Divider />
-  
+
   <ActionList.Item variant="danger">
     <ActionList.LeadingVisual>
       <TrashIcon />
@@ -115,33 +117,35 @@ export {ActionList}
 Primer React 同时使用两种 API 风格，选择取决于设计意图：
 
 ```tsx
-{/* 复合组件风格：灵活、可组合 */}
-<ActionList>
+{
+  /* 复合组件风格：灵活、可组合 */
+}
+;<ActionList>
   <ActionList.Item>
-    <ActionList.LeadingVisual><SearchIcon /></ActionList.LeadingVisual>
+    <ActionList.LeadingVisual>
+      <SearchIcon />
+    </ActionList.LeadingVisual>
     搜索
     <ActionList.Description>在仓库中搜索</ActionList.Description>
   </ActionList.Item>
 </ActionList>
 
-{/* Props 驱动风格：简洁、受控 */}
-<Button 
-  variant="primary" 
-  leadingVisual={SearchIcon}
-  size="medium"
->
+{
+  /* Props 驱动风格：简洁、受控 */
+}
+;<Button variant="primary" leadingVisual={SearchIcon} size="medium">
   搜索
 </Button>
 ```
 
 **何时使用哪种风格？**
 
-| 场景 | 推荐风格 | 原因 |
-|------|---------|------|
-| 子元素结构灵活多变 | 复合组件 | 让使用者自由组合 |
-| 组件结构固定、变体有限 | Props 驱动 | 简化使用、确保一致 |
-| 列表/菜单类组件 | 复合组件 | 子项可能包含不同内容 |
-| 按钮/标签类组件 | Props 驱动 | 结构简单明确 |
+| 场景                   | 推荐风格   | 原因                 |
+| ---------------------- | ---------- | -------------------- |
+| 子元素结构灵活多变     | 复合组件   | 让使用者自由组合     |
+| 组件结构固定、变体有限 | Props 驱动 | 简化使用、确保一致   |
+| 列表/菜单类组件        | 复合组件   | 子项可能包含不同内容 |
+| 按钮/标签类组件        | Props 驱动 | 结构简单明确         |
 
 ---
 
@@ -188,15 +192,13 @@ type ButtonBaseProps = {
   children?: React.ReactNode
 }
 
-const ButtonBase = forwardRef(
-  ({as: Component = 'button', children, ...props}, ref) => {
-    return (
-      <Component ref={ref} {...props}>
-        {children}
-      </Component>
-    )
-  }
-) as ForwardRefComponent<'button', ButtonBaseProps>
+const ButtonBase = forwardRef(({as: Component = 'button', children, ...props}, ref) => {
+  return (
+    <Component ref={ref} {...props}>
+      {children}
+    </Component>
+  )
+}) as ForwardRefComponent<'button', ButtonBaseProps>
 ```
 
 **关键点**：
@@ -239,19 +241,12 @@ Slot 模式允许父组件从 `children` 中"提取"出特定的子组件，放�
     <ActionList.LeadingVisual>
       <Avatar src="user.png" />
     </ActionList.LeadingVisual>
-    
     {/* 文本内容放在中间 */}
     用户名
-    
     {/* Description 被"提取"到文本下方 */}
-    <ActionList.Description>
-      这是一段描述
-    </ActionList.Description>
-    
+    <ActionList.Description>这是一段描述</ActionList.Description>
     {/* TrailingVisual 被"提取"到右侧 */}
-    <ActionList.TrailingVisual>
-      ⌘K
-    </ActionList.TrailingVisual>
+    <ActionList.TrailingVisual>⌘K</ActionList.TrailingVisual>
   </ActionList.Item>
 </ActionList>
 ```
@@ -323,7 +318,7 @@ graph TB
         B2 -->|"Context: {selected, disabled}"| C2[ActionList.LeadingVisual]
         B2 -->|"Context: {selected, disabled}"| D2[ActionList.Description]
     end
-    
+
     style A2 fill:#0969da,color:#fff
 ```
 
@@ -334,9 +329,9 @@ ActionList 使用多层 Context 实现组件间通信：
 ```tsx
 // 第一层：List Context（列表级配置）
 const ListContext = React.createContext({
-  variant: 'inset',      // 列表变体
-  selectionVariant: undefined,  // 选择模式
-  role: undefined,        // ARIA role
+  variant: 'inset', // 列表变体
+  selectionVariant: undefined, // 选择模式
+  role: undefined, // ARIA role
 })
 
 // 第二层：Item Context（项目级状态）
@@ -351,10 +346,7 @@ const ItemContext = React.createContext({
 
 ```tsx
 function List({variant, selectionVariant, children}) {
-  const contextValue = React.useMemo(
-    () => ({variant, selectionVariant}),
-    [variant, selectionVariant]
-  )
+  const contextValue = React.useMemo(() => ({variant, selectionVariant}), [variant, selectionVariant])
 
   return (
     <ListContext.Provider value={contextValue}>
@@ -392,17 +384,17 @@ graph TB
     subgraph 容器上下文
         CC[ActionListContainerContext<br/>container: 'ActionMenu' | 'SelectPanel']
     end
-    
+
     subgraph 列表上下文
         LC[ListContext<br/>variant, selectionVariant, role]
     end
-    
+
     subgraph 项目上下文
         IC[ItemContext<br/>selected, disabled, inactive]
     end
-    
+
     CC --> LC --> IC
-    
+
     style CC fill:#0969da,color:#fff
     style LC fill:#8250df,color:#fff
     style IC fill:#1a7f37,color:#fff
@@ -425,18 +417,15 @@ Primer React 使用 HTML `data-*` 属性来控制组件变体，而不是传统�
 ### 传统方式 vs Primer 方式
 
 ```tsx
-{/* 传统方式：多个 CSS 类 */}
-<button className="btn btn--primary btn--large btn--loading">
-  提交
-</button>
+{
+  /* 传统方式：多个 CSS 类 */
+}
+;<button className="btn btn--primary btn--large btn--loading">提交</button>
 
-{/* Primer 方式：data 属性 */}
-<button
-  className={classes.Button}
-  data-variant="primary"
-  data-size="large"
-  data-loading
->
+{
+  /* Primer 方式：data 属性 */
+}
+;<button className={classes.Button} data-variant="primary" data-size="large" data-loading>
   提交
 </button>
 ```
@@ -463,24 +452,24 @@ Primer React 使用 HTML `data-*` 属性来控制组件变体，而不是传统�
 
 ### 为什么选择 Data Attributes？
 
-| 优势 | 说明 |
-|------|------|
-| 📊 特异性可控 | `:where()` 将特异性归零，避免样式冲突 |
-| 🎯 语义清晰 | `data-variant="primary"` 比 `btn--primary` 更具语义 |
-| 🔧 调试友好 | 在 DevTools 中一目了然组件状态 |
-| 📋 CSS Layers 兼容 | 与 CSS Layers 方案完美配合 |
+| 优势               | 说明                                                |
+| ------------------ | --------------------------------------------------- |
+| 📊 特异性可控      | `:where()` 将特异性归零，避免样式冲突               |
+| 🎯 语义清晰        | `data-variant="primary"` 比 `btn--primary` 更具语义 |
+| 🔧 调试友好        | 在 DevTools 中一目了然组件状态                      |
+| 📋 CSS Layers 兼容 | 与 CSS Layers 方案完美配合                          |
 
 ---
 
 ## ✅ 本章小结
 
-| 模式 | 核心思想 | 典型组件 |
-|------|---------|---------|
-| 复合组件 | 子组件通过静态属性挂载，组合使用 | ActionList, ActionMenu, Dialog |
-| 多态组件 | `as` prop 改变渲染元素类型 | Button, Box, Link |
-| Slot 模式 | useSlots 从 children 中提取特定组件到指定位置 | ActionList.Item |
-| Context 通信 | 多层 Context 实现父子组件状态共享 | ActionList + Item + LeadingVisual |
-| Data 属性变体 | `data-*` + `:where()` 控制组件状态样式 | 几乎所有组件 |
+| 模式          | 核心思想                                      | 典型组件                          |
+| ------------- | --------------------------------------------- | --------------------------------- |
+| 复合组件      | 子组件通过静态属性挂载，组合使用              | ActionList, ActionMenu, Dialog    |
+| 多态组件      | `as` prop 改变渲染元素类型                    | Button, Box, Link                 |
+| Slot 模式     | useSlots 从 children 中提取特定组件到指定位置 | ActionList.Item                   |
+| Context 通信  | 多层 Context 实现父子组件状态共享             | ActionList + Item + LeadingVisual |
+| Data 属性变体 | `data-*` + `:where()` 控制组件状态样式        | 几乎所有组件                      |
 
 ---
 

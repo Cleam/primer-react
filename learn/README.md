@@ -8,13 +8,13 @@
 
 **Primer React** 解决了大型产品中 UI 一致性、可维护性和开发效率的核心挑战：
 
-| 问题 | Primer React 的解决方案 |
-|------|------------------------|
-| 不同团队开发的 UI 风格不一致 | 提供统一的设计令牌（Design Tokens）和组件库 |
-| 重复造轮子、样式碎片化 | 60+ 开箱即用的高质量组件 |
-| 无障碍访问（Accessibility）难以保证 | 组件内置 ARIA 属性和键盘导航 |
-| 暗色模式、主题切换开发成本高 | 完整的主题系统，支持亮/暗/自动模式 |
-| CSS 运行时注入性能瓶颈 | CSS Modules 方案，比运行时快 60% |
+| 问题                                | Primer React 的解决方案                     |
+| ----------------------------------- | ------------------------------------------- |
+| 不同团队开发的 UI 风格不一致        | 提供统一的设计令牌（Design Tokens）和组件库 |
+| 重复造轮子、样式碎片化              | 60+ 开箱即用的高质量组件                    |
+| 无障碍访问（Accessibility）难以保证 | 组件内置 ARIA 属性和键盘导航                |
+| 暗色模式、主题切换开发成本高        | 完整的主题系统，支持亮/暗/自动模式          |
+| CSS 运行时注入性能瓶颈              | CSS Modules 方案，比运行时快 60%            |
 
 **一句话定位**：Primer React 是连接设计与工程的桥梁，让"设计意图"能够精确、高效地转化为可运行的代码。
 
@@ -25,10 +25,10 @@
 ```mermaid
 graph TB
     START[🚀 开始学习] --> ROLE{你的角色是？}
-    
+
     ROLE -->|前端开发者| FE[📂 前端开发者路线]
     ROLE -->|UI 设计师| UI[🎨 UI 设计师路线]
-    
+
     FE --> FE1[01 - 快速入门]
     FE1 --> FE2[02 - 核心概念]
     FE2 --> FE3[03 - 组件设计模式]
@@ -36,12 +36,12 @@ graph TB
     FE4 --> FE5[05 - 源码深度解析]
     FE5 --> FE6[06 - 实战指南]
     FE6 --> FE7[07 - 扩展学习]
-    
+
     UI --> UI1[01 - 设计系统基础]
     UI1 --> UI2[02 - 设计令牌与主题]
     UI2 --> UI3[03 - 组件全景图]
     UI3 --> UI4[04 - 设计模式与最佳实践]
-    
+
     style START fill:#0969da,color:#fff
     style FE fill:#1a7f37,color:#fff
     style UI fill:#8250df,color:#fff
@@ -62,15 +62,15 @@ graph TB
 
 **推荐学习路径**：
 
-| 阶段 | 文档 | 预计时间 | 学习重点 |
-|------|------|---------|---------|
-| 🟢 入门 | [01 - 快速入门](./front-end/01-getting-started.md) | 30 分钟 | 安装、基础使用、项目结构 |
-| 🟢 入门 | [02 - 核心概念](./front-end/02-core-concepts.md) | 45 分钟 | 主题系统、样式方案、组件分类 |
-| 🟡 进阶 | [03 - 组件设计模式](./front-end/03-component-patterns.md) | 60 分钟 | 复合组件、多态组件、Slot 模式 |
-| 🟡 进阶 | [04 - 高级架构](./front-end/04-advanced-architecture.md) | 60 分钟 | CSS Modules 迁移、性能优化、SSR |
-| 🔴 深入 | [05 - 源码深度解析](./front-end/05-source-code-deep-dive.md) | 90 分钟 | 关键源码分析、设计模式、架构推理 |
-| 🟠 实战 | [06 - 实战指南](./front-end/06-practice-guide.md) | 60 分钟 | 常见场景、最佳实践、问题排查 |
-| 🔵 扩展 | [07 - 扩展学习](./front-end/07-further-learning.md) | 30 分钟 | 相关知识、延伸阅读 |
+| 阶段    | 文档                                                         | 预计时间 | 学习重点                         |
+| ------- | ------------------------------------------------------------ | -------- | -------------------------------- |
+| 🟢 入门 | [01 - 快速入门](./front-end/01-getting-started.md)           | 30 分钟  | 安装、基础使用、项目结构         |
+| 🟢 入门 | [02 - 核心概念](./front-end/02-core-concepts.md)             | 45 分钟  | 主题系统、样式方案、组件分类     |
+| 🟡 进阶 | [03 - 组件设计模式](./front-end/03-component-patterns.md)    | 60 分钟  | 复合组件、多态组件、Slot 模式    |
+| 🟡 进阶 | [04 - 高级架构](./front-end/04-advanced-architecture.md)     | 60 分钟  | CSS Modules 迁移、性能优化、SSR  |
+| 🔴 深入 | [05 - 源码深度解析](./front-end/05-source-code-deep-dive.md) | 90 分钟  | 关键源码分析、设计模式、架构推理 |
+| 🟠 实战 | [06 - 实战指南](./front-end/06-practice-guide.md)            | 60 分钟  | 常见场景、最佳实践、问题排查     |
+| 🔵 扩展 | [07 - 扩展学习](./front-end/07-further-learning.md)          | 30 分钟  | 相关知识、延伸阅读               |
 
 ### 🎨 UI 设计师（UI Designer）
 
@@ -83,12 +83,12 @@ graph TB
 
 **推荐学习路径**：
 
-| 阶段 | 文档 | 预计时间 | 学习重点 |
-|------|------|---------|---------|
-| 🟢 入门 | [01 - 设计系统基础](./ui-designer/01-design-system-fundamentals.md) | 30 分钟 | Primer 设计哲学、核心原则 |
-| 🟡 进阶 | [02 - 设计令牌与主题](./ui-designer/02-design-tokens-and-theming.md) | 45 分钟 | 颜色、排版、间距体系 |
-| 🟡 进阶 | [03 - 组件全景图](./ui-designer/03-component-gallery.md) | 60 分钟 | 60+ 组件分类、使用场景 |
-| 🔴 深入 | [04 - 设计模式与最佳实践](./ui-designer/04-design-patterns.md) | 45 分钟 | 布局模式、交互规范、协作方式 |
+| 阶段    | 文档                                                                 | 预计时间 | 学习重点                     |
+| ------- | -------------------------------------------------------------------- | -------- | ---------------------------- |
+| 🟢 入门 | [01 - 设计系统基础](./ui-designer/01-design-system-fundamentals.md)  | 30 分钟  | Primer 设计哲学、核心原则    |
+| 🟡 进阶 | [02 - 设计令牌与主题](./ui-designer/02-design-tokens-and-theming.md) | 45 分钟  | 颜色、排版、间距体系         |
+| 🟡 进阶 | [03 - 组件全景图](./ui-designer/03-component-gallery.md)             | 60 分钟  | 60+ 组件分类、使用场景       |
+| 🔴 深入 | [04 - 设计模式与最佳实践](./ui-designer/04-design-patterns.md)       | 45 分钟  | 布局模式、交互规范、协作方式 |
 
 ---
 
@@ -117,21 +117,27 @@ learn/
 ## 🔑 快速导航
 
 ### 我想快速了解项目
+
 👉 从 [前端开发者 - 01 快速入门](./front-end/01-getting-started.md) 或 [UI 设计师 - 01 设计系统基础](./ui-designer/01-design-system-fundamentals.md) 开始
 
 ### 我想理解架构设计
+
 👉 阅读 [前端开发者 - 04 高级架构](./front-end/04-advanced-architecture.md)
 
 ### 我想看懂源码
+
 👉 阅读 [前端开发者 - 05 源码深度解析](./front-end/05-source-code-deep-dive.md)
 
 ### 我想在项目中使用
+
 👉 阅读 [前端开发者 - 06 实战指南](./front-end/06-practice-guide.md)
 
 ### 我想了解设计令牌体系
+
 👉 阅读 [UI 设计师 - 02 设计令牌与主题](./ui-designer/02-design-tokens-and-theming.md)
 
 ### 我想了解有哪些组件可用
+
 👉 阅读 [UI 设计师 - 03 组件全景图](./ui-designer/03-component-gallery.md)
 
 ---

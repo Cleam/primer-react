@@ -28,6 +28,7 @@ GitHub 最常见的页面结构——左侧导航 + 右侧内容：
 ```
 
 **使用的组件**：
+
 - `PageLayout` + `PageLayout.Pane` + `PageLayout.Content`
 - `NavList` 用于侧边栏导航
 - `PageHeader` 用于内容区顶部
@@ -64,6 +65,7 @@ GitHub 最常见的页面结构——左侧导航 + 右侧内容：
 ```
 
 **使用的组件**：
+
 - `FormControl` 包裹每个表单项
 - `TextInput` / `Textarea` 用于输入
 - `RadioGroup` 用于单选
@@ -94,6 +96,7 @@ GitHub 最常见的页面结构——左侧导航 + 右侧内容：
 ```
 
 **使用的组件**：
+
 - `ActionMenu` 用于筛选下拉
 - `ActionList` 用于列表项
 - `StateLabel` 用于状态标识
@@ -107,22 +110,22 @@ GitHub 最常见的页面结构——左侧导航 + 右侧内容：
 
 ### 功能色的使用原则
 
-| 功能色 | 使用场景 | 注意事项 |
-|--------|---------|---------|
-| 🔵 Accent | 链接、主要按钮、选中态 | 不要滥用，仅用于需要引起注意的元素 |
-| 🟢 Success | 成功消息、合并状态、完成指示 | 不要用于与"成功"无关的绿色装饰 |
-| 🟡 Attention | 警告消息、待处理事项 | 要搭配文字说明，不能仅靠颜色传达 |
-| 🔴 Danger | 错误消息、删除操作、关闭状态 | 破坏性操作必须有确认步骤 |
-| ⚪ Neutral | 默认文字、边框、背景 | 大部分界面应该是中性色 |
+| 功能色       | 使用场景                     | 注意事项                           |
+| ------------ | ---------------------------- | ---------------------------------- |
+| 🔵 Accent    | 链接、主要按钮、选中态       | 不要滥用，仅用于需要引起注意的元素 |
+| 🟢 Success   | 成功消息、合并状态、完成指示 | 不要用于与"成功"无关的绿色装饰     |
+| 🟡 Attention | 警告消息、待处理事项         | 要搭配文字说明，不能仅靠颜色传达   |
+| 🔴 Danger    | 错误消息、删除操作、关闭状态 | 破坏性操作必须有确认步骤           |
+| ⚪ Neutral   | 默认文字、边框、背景         | 大部分界面应该是中性色             |
 
 ### 对比度要求
 
-| 场景 | WCAG 要求 | 最低对比度 |
-|------|----------|-----------|
-| 正常文字 | AA | 4.5:1 |
-| 大文字（18px+ bold 或 24px+） | AA | 3:1 |
-| 非文字元素（图标、边框） | AA | 3:1 |
-| 增强对比度 | AAA | 7:1 |
+| 场景                          | WCAG 要求 | 最低对比度 |
+| ----------------------------- | --------- | ---------- |
+| 正常文字                      | AA        | 4.5:1      |
+| 大文字（18px+ bold 或 24px+） | AA        | 3:1        |
+| 非文字元素（图标、边框）      | AA        | 3:1        |
+| 增强对比度                    | AAA       | 7:1        |
 
 > 💡 使用 Primer 的设计令牌可以自动满足对比度要求，因为令牌的值已经过计算和验证。
 
@@ -151,7 +154,7 @@ graph TB
     A[TextInput 搜索框] --> B[ActionMenu 筛选]
     B --> C[ActionList 结果列表]
     C --> D[Pagination 分页]
-    
+
     style A fill:#0969da,color:#fff
     style C fill:#1a7f37,color:#fff
 ```
@@ -163,7 +166,7 @@ graph LR
     A[Button / IconButton] -->|点击| B[AnchoredOverlay]
     B --> C[ActionList 选项]
     C -->|选择| D[回调处理]
-    
+
     style A fill:#0969da,color:#fff
     style B fill:#8250df,color:#fff
 ```
@@ -176,7 +179,7 @@ graph TB
     A --> C[TextInput 输入]
     A --> D[Caption 说明]
     A --> E[Validation 验证]
-    
+
     style A fill:#0969da,color:#fff
 ```
 
@@ -186,15 +189,15 @@ graph TB
 
 ### 设计阶段需要考虑的无障碍要素
 
-| 检查项 | 说明 | Primer 支持 |
-|--------|------|------------|
-| ✅ 颜色对比度 | 文字与背景的对比度满足 WCAG AA | 令牌已内置验证 |
-| ✅ 不仅靠颜色 | 用图标/文字辅助颜色信息 | 组件内置图标 |
-| ✅ 焦点可见 | 键盘导航时焦点状态明显 | 组件内置焦点样式 |
-| ✅ 交互目标 | 可点击区域至少 44x44px | 控件尺寸满足 |
-| ✅ 文字可缩放 | 使用相对单位，支持浏览器缩放 | 令牌使用 px 但可覆盖 |
-| ✅ 键盘操作 | 所有功能可通过键盘完成 | 组件内置键盘导航 |
-| ✅ 屏幕阅读器 | 提供合适的 ARIA 标签 | 组件自动推断 role |
+| 检查项        | 说明                           | Primer 支持          |
+| ------------- | ------------------------------ | -------------------- |
+| ✅ 颜色对比度 | 文字与背景的对比度满足 WCAG AA | 令牌已内置验证       |
+| ✅ 不仅靠颜色 | 用图标/文字辅助颜色信息        | 组件内置图标         |
+| ✅ 焦点可见   | 键盘导航时焦点状态明显         | 组件内置焦点样式     |
+| ✅ 交互目标   | 可点击区域至少 44x44px         | 控件尺寸满足         |
+| ✅ 文字可缩放 | 使用相对单位，支持浏览器缩放   | 令牌使用 px 但可覆盖 |
+| ✅ 键盘操作   | 所有功能可通过键盘完成         | 组件内置键盘导航     |
+| ✅ 屏幕阅读器 | 提供合适的 ARIA 标签           | 组件自动推断 role    |
 
 ### 常见的无障碍错误
 
@@ -222,26 +225,26 @@ graph TB
 
 ### 建立共同词汇
 
-| 设计师的语言 | 开发者的代码 | 统一术语 |
-|------------|------------|---------|
-| "主要按钮" | `variant="primary"` | Primary Button |
-| "柔和的蓝色背景" | `--bgColor-accent-muted` | Accent Muted |
-| "中等间距" | `--space-3` (16px) | Space 3 |
-| "浮层组件" | `<AnchoredOverlay>` | Overlay |
-| "选中态" | `selected={true}` | Selected State |
+| 设计师的语言     | 开发者的代码             | 统一术语       |
+| ---------------- | ------------------------ | -------------- |
+| "主要按钮"       | `variant="primary"`      | Primary Button |
+| "柔和的蓝色背景" | `--bgColor-accent-muted` | Accent Muted   |
+| "中等间距"       | `--space-3` (16px)       | Space 3        |
+| "浮层组件"       | `<AnchoredOverlay>`      | Overlay        |
+| "选中态"         | `selected={true}`        | Selected State |
 
 ### 设计交付清单
 
 当设计师将设计稿交给开发者时，建议包含以下信息：
 
-| 信息 | 示例 | 对应代码 |
-|------|------|---------|
-| 组件名称 | "使用 ActionMenu" | `<ActionMenu>` |
-| 变体 | "Primary Button, size medium" | `variant="primary" size="medium"` |
-| 颜色令牌 | "背景色 accent-emphasis" | `--bgColor-accent-emphasis` |
-| 间距 | "间距 space-3 (16px)" | `gap: var(--space-3)` |
-| 交互状态 | "悬停时背景变深" | 组件内置 |
-| 响应式行为 | "窄屏时侧边栏折叠" | `PageLayout.Pane` 自动处理 |
+| 信息       | 示例                          | 对应代码                          |
+| ---------- | ----------------------------- | --------------------------------- |
+| 组件名称   | "使用 ActionMenu"             | `<ActionMenu>`                    |
+| 变体       | "Primary Button, size medium" | `variant="primary" size="medium"` |
+| 颜色令牌   | "背景色 accent-emphasis"      | `--bgColor-accent-emphasis`       |
+| 间距       | "间距 space-3 (16px)"         | `gap: var(--space-3)`             |
+| 交互状态   | "悬停时背景变深"              | 组件内置                          |
+| 响应式行为 | "窄屏时侧边栏折叠"            | `PageLayout.Pane` 自动处理        |
 
 ### 设计评审关注点
 
@@ -290,12 +293,12 @@ graph TB
 
 回顾你学到了什么：
 
-| 章节 | 核心收获 |
-|------|---------|
-| 01 设计系统基础 | Primer 的设计哲学、核心原则、基本概念 |
-| 02 设计令牌与主题 | 三层令牌架构、颜色体系、主题切换 |
-| 03 组件全景图 | 60+ 组件分类、使用场景、关键特性 |
-| 04 设计模式 | 布局模式、颜色规范、无障碍、协作方式 |
+| 章节              | 核心收获                              |
+| ----------------- | ------------------------------------- |
+| 01 设计系统基础   | Primer 的设计哲学、核心原则、基本概念 |
+| 02 设计令牌与主题 | 三层令牌架构、颜色体系、主题切换      |
+| 03 组件全景图     | 60+ 组件分类、使用场景、关键特性      |
+| 04 设计模式       | 布局模式、颜色规范、无障碍、协作方式  |
 
 > 🎯 **最终目标**：能够使用 Primer 的设计语言进行设计，与开发者高效沟通，交付一致、可访问、高质量的用户界面。
 
@@ -303,13 +306,13 @@ graph TB
 
 ## 📚 延伸阅读
 
-| 资源 | 说明 |
-|------|------|
-| [Primer 官方设计文档](https://primer.style) | 完整的设计系统文档 |
-| [GitHub 无障碍指南](https://accessibility.github.com) | GitHub 的无障碍实践 |
-| [WCAG 2.1 指南](https://www.w3.org/TR/WCAG21/) | Web 内容无障碍指南 |
-| [Inclusive Design Principles](https://inclusivedesignprinciples.info) | 包容性设计原则 |
-| [Material Design Guidelines](https://m3.material.io) | Google 设计规范参考 |
+| 资源                                                                  | 说明                |
+| --------------------------------------------------------------------- | ------------------- |
+| [Primer 官方设计文档](https://primer.style)                           | 完整的设计系统文档  |
+| [GitHub 无障碍指南](https://accessibility.github.com)                 | GitHub 的无障碍实践 |
+| [WCAG 2.1 指南](https://www.w3.org/TR/WCAG21/)                        | Web 内容无障碍指南  |
+| [Inclusive Design Principles](https://inclusivedesignprinciples.info) | 包容性设计原则      |
+| [Material Design Guidelines](https://m3.material.io)                  | Google 设计规范参考 |
 
 ---
 

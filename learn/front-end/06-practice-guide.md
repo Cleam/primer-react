@@ -17,9 +17,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="zh-CN">
       <body>
         <ThemeProvider colorMode="auto" preventSSRMismatch>
-          <BaseStyles>
-            {children}
-          </BaseStyles>
+          <BaseStyles>{children}</BaseStyles>
         </ThemeProvider>
       </body>
     </html>
@@ -28,6 +26,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 ```
 
 **注意事项**：
+
 - Next.js App Router 中必须设置 `preventSSRMismatch` 避免水合错误
 - 如果使用 Pages Router，在 `_app.tsx` 中添加 ThemeProvider
 
@@ -47,7 +46,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <App />
       </BaseStyles>
     </ThemeProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 )
 ```
 
@@ -78,11 +77,7 @@ function FilterMenu() {
               key={option}
               selected={selected.includes(option)}
               onSelect={() => {
-                setSelected(prev =>
-                  prev.includes(option)
-                    ? prev.filter(s => s !== option)
-                    : [...prev, option]
-                )
+                setSelected(prev => (prev.includes(option) ? prev.filter(s => s !== option) : [...prev, option]))
               }}
             >
               {option}
@@ -115,11 +110,7 @@ function ConfirmDeleteDialog() {
 
   return (
     <>
-      <Button
-        ref={returnFocusRef}
-        variant="danger"
-        onClick={() => setIsOpen(true)}
-      >
+      <Button ref={returnFocusRef} variant="danger" onClick={() => setIsOpen(true)}>
         删除仓库
       </Button>
 
@@ -158,15 +149,21 @@ function DashboardPage() {
       <PageLayout.Pane position="start" width="small">
         <NavList>
           <NavList.Item href="/dashboard" aria-current="page">
-            <NavList.LeadingVisual><HomeIcon /></NavList.LeadingVisual>
+            <NavList.LeadingVisual>
+              <HomeIcon />
+            </NavList.LeadingVisual>
             首页
           </NavList.Item>
           <NavList.Item href="/repos">
-            <NavList.LeadingVisual><RepoIcon /></NavList.LeadingVisual>
+            <NavList.LeadingVisual>
+              <RepoIcon />
+            </NavList.LeadingVisual>
             仓库
           </NavList.Item>
           <NavList.Item href="/issues">
-            <NavList.LeadingVisual><IssueOpenedIcon /></NavList.LeadingVisual>
+            <NavList.LeadingVisual>
+              <IssueOpenedIcon />
+            </NavList.LeadingVisual>
             议题
           </NavList.Item>
         </NavList>
@@ -234,13 +231,15 @@ function IssueForm() {
   const titleError = submitted && !title ? '标题不能为空' : undefined
 
   return (
-    <form onSubmit={e => {
-      e.preventDefault()
-      setSubmitted(true)
-      if (title) {
-        console.log({title, body})
-      }
-    }}>
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+        setSubmitted(true)
+        if (title) {
+          console.log({title, body})
+        }
+      }}
+    >
       <Stack direction="vertical" gap="normal">
         <FormControl required>
           <FormControl.Label>标题</FormControl.Label>
@@ -250,24 +249,13 @@ function IssueForm() {
             validationStatus={titleError ? 'error' : undefined}
             block
           />
-          {titleError && (
-            <FormControl.Validation variant="error">
-              {titleError}
-            </FormControl.Validation>
-          )}
+          {titleError && <FormControl.Validation variant="error">{titleError}</FormControl.Validation>}
         </FormControl>
 
         <FormControl>
           <FormControl.Label>描述</FormControl.Label>
-          <Textarea
-            value={body}
-            onChange={e => setBody(e.target.value)}
-            placeholder="详细描述问题..."
-            block
-          />
-          <FormControl.Caption>
-            支持 Markdown 格式
-          </FormControl.Caption>
+          <Textarea value={body} onChange={e => setBody(e.target.value)} placeholder="详细描述问题..." block />
+          <FormControl.Caption>支持 Markdown 格式</FormControl.Caption>
         </FormControl>
 
         <Button type="submit" variant="primary">
@@ -316,6 +304,7 @@ import {Heading, Text, Link} from '@primer/react'
 ```
 
 **为什么？** FormControl 自动：
+
 - 关联 `<label>` 和 `<input>`（通过 `htmlFor`/`id`）
 - 关联描述文字（通过 `aria-describedby`）
 - 关联错误消息（通过 `aria-errormessage`）
@@ -340,7 +329,7 @@ import {Heading, Text, Link} from '@primer/react'
 
 ```tsx
 // ✅ 使用组件内置的 loading 状态
-<Button loading loadingAnnouncement="正在提交...">
+;<Button loading loadingAnnouncement="正在提交...">
   提交
 </Button>
 
@@ -479,10 +468,7 @@ const handleSelect = useCallback((item: string) => {
 }, [])
 
 // ✅ 使用 useMemo 缓存复杂计算
-const filteredItems = useMemo(
-  () => items.filter(item => item.includes(query)),
-  [items, query]
-)
+const filteredItems = useMemo(() => items.filter(item => item.includes(query)), [items, query])
 ```
 
 ### 3. 大列表使用虚拟滚动
@@ -493,13 +479,13 @@ const filteredItems = useMemo(
 
 ## ✅ 本章小结
 
-| 内容 | 要点 |
-|------|------|
-| 项目集成 | ThemeProvider + BaseStyles 是必需的根组件 |
+| 内容     | 要点                                                 |
+| -------- | ---------------------------------------------------- |
+| 项目集成 | ThemeProvider + BaseStyles 是必需的根组件            |
 | 常见场景 | 筛选菜单、确认对话框、响应式布局、数据表格、表单验证 |
-| 最佳实践 | 语义化使用、FormControl 包裹、避免内联样式覆盖 |
-| 问题排查 | CSS 加载、SSR 水合、焦点管理、TypeScript 类型 |
-| 性能优化 | Tree-shaking、useCallback/useMemo、虚拟滚动 |
+| 最佳实践 | 语义化使用、FormControl 包裹、避免内联样式覆盖       |
+| 问题排查 | CSS 加载、SSR 水合、焦点管理、TypeScript 类型        |
+| 性能优化 | Tree-shaking、useCallback/useMemo、虚拟滚动          |
 
 ---
 

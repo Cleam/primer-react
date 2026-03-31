@@ -13,24 +13,24 @@ graph TB
     subgraph 应用层["应用层（Consumer）"]
         APP["你的 React 应用"]
     end
-    
+
     subgraph 组件层["组件层（@primer/react）"]
         COMP["60+ 组件<br/>Button, ActionList, Dialog..."]
         HOOKS["Hooks<br/>useTheme, useFocusZone..."]
     end
-    
+
     subgraph 基础设施层["基础设施层"]
         THEME["ThemeProvider<br/>主题上下文"]
         CSS["CSS Modules<br/>样式系统"]
         POLY["Polymorphic<br/>多态类型系统"]
         SLOTS["useSlots<br/>Slot 系统"]
     end
-    
+
     subgraph 令牌层["设计令牌层"]
         PRIM["@primer/primitives<br/>颜色/间距/字体"]
         BEHAV["@primer/behaviors<br/>焦点/键盘"]
     end
-    
+
     APP --> COMP
     APP --> HOOKS
     COMP --> THEME
@@ -39,7 +39,7 @@ graph TB
     COMP --> SLOTS
     THEME --> PRIM
     HOOKS --> BEHAV
-    
+
     style APP fill:#f6f8fa,color:#1f2328
     style COMP fill:#0969da,color:#fff
     style THEME fill:#8250df,color:#fff
@@ -72,11 +72,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   // 2. 监听系统颜色偏好
   const systemColorMode = useSystemColorMode()
-  
+
   // 3. 解析实际使用的颜色模式
   const resolvedColorMode = resolveColorMode(colorMode, systemColorMode)
   const resolvedColorScheme = resolvedColorMode === 'day' ? dayScheme : nightScheme
-  
+
   // 4. 生成 Context 值
   const contextValue = useMemo(
     () => ({
@@ -88,7 +88,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     }),
     [colorMode, dayScheme, nightScheme, resolvedColorMode]
   )
-  
+
   return (
     <ThemeContext.Provider value={contextValue}>
       <div
@@ -120,12 +120,13 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 ```html
 <!-- Primer 的做法 -->
 <div data-color-mode="auto" data-light-theme="light" data-dark-theme="dark">
-
-<!-- 而不是 -->
-<div class="theme-auto light-theme-light dark-theme-dark">
+  <!-- 而不是 -->
+  <div class="theme-auto light-theme-light dark-theme-dark"></div>
+</div>
 ```
 
 **原因**：
+
 - `data-*` 属性具有语义性，表达的是"数据"而不是"样式"
 - CSS 变量的激活规则由 `@primer/primitives` 定义，通过 `[data-color-mode]` 选择器匹配
 - 与 CSS Layers 配合更好——属性选择器的特异性一致且可预测
@@ -133,13 +134,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 **决策 2：为什么用 `dangerouslySetInnerHTML` 注入 SSR 数据？**
 
 ```tsx
-<script
-  type="application/json"
-  dangerouslySetInnerHTML={{__html: JSON.stringify(data)}}
-/>
+<script type="application/json" dangerouslySetInnerHTML={{__html: JSON.stringify(data)}} />
 ```
 
 **原因**：
+
 - `type="application/json"` 的 `<script>` 不会被浏览器执行，安全性有保障
 - JSON 序列化确保数据格式正确
 - 嵌入在 React 树中，随组件一起服务端渲染
@@ -152,6 +151,7 @@ const theme = deepmerge(defaultTheme, customTheme)
 ```
 
 **原因**：
+
 - 支持主题的局部覆盖（只改变需要的部分）
 - 嵌套的 ThemeProvider 可以继承并扩展父级主题
 - 深合并确保嵌套对象不会被浅拷贝覆盖
@@ -189,14 +189,10 @@ const ButtonBase = forwardRef(
   ) => {
     const innerRef = useRef<HTMLElement>(null)
     const ref = useMergedRefs(innerRef, forwardedRef)
-    
+
     // 构建 aria 属性
-    const ariaProps = loading
-      ? {'aria-disabled': true, 'aria-busy': true}
-      : inactive
-        ? {'aria-disabled': true}
-        : {}
-    
+    const ariaProps = loading ? {'aria-disabled': true, 'aria-busy': true} : inactive ? {'aria-disabled': true} : {}
+
     return (
       <Component
         ref={ref}
@@ -215,45 +211,35 @@ const ButtonBase = forwardRef(
             <Spinner size="small" />
           </span>
         )}
-        
+
         {/* 按钮内容 */}
         <span className={classes.Content} aria-hidden={loading ? 'true' : undefined}>
           {/* 前置图标 */}
           {LeadingVisual && (
-            <span className={classes.Visual}>
-              {isElement(LeadingVisual)
-                ? LeadingVisual
-                : <LeadingVisual />}
-            </span>
+            <span className={classes.Visual}>{isElement(LeadingVisual) ? LeadingVisual : <LeadingVisual />}</span>
           )}
-          
+
           {/* 按钮文本 */}
           <span className={classes.Label}>{children}</span>
-          
+
           {/* 计数 */}
           {count !== undefined && (
             <span className={classes.Count}>
               <CounterLabel>{count}</CounterLabel>
             </span>
           )}
-          
+
           {/* 后置图标 */}
           {TrailingVisual && (
-            <span className={classes.Visual}>
-              {isElement(TrailingVisual)
-                ? TrailingVisual
-                : <TrailingVisual />}
-            </span>
+            <span className={classes.Visual}>{isElement(TrailingVisual) ? TrailingVisual : <TrailingVisual />}</span>
           )}
         </span>
-        
+
         {/* 加载中的无障碍提示 */}
-        {loading && (
-          <VisuallyHidden>{loadingAnnouncement}</VisuallyHidden>
-        )}
+        {loading && <VisuallyHidden>{loadingAnnouncement}</VisuallyHidden>}
       </Component>
     )
-  }
+  },
 )
 ```
 
@@ -272,12 +258,17 @@ const ButtonBase = forwardRef(
 实现方式：
 
 ```tsx
-{isElement(LeadingVisual)
-  ? LeadingVisual                    // 已经是 ReactElement，直接渲染
-  : <LeadingVisual />}              // 是 ComponentType，需要实例化
+{
+  isElement(LeadingVisual) ? (
+    LeadingVisual // 已经是 ReactElement，直接渲染
+  ) : (
+    <LeadingVisual />
+  )
+} // 是 ComponentType，需要实例化
 ```
 
 **为什么这样设计？**
+
 - ComponentType（`SearchIcon`）更简洁，适合大多数场景
 - ReactElement（`<SearchIcon size={16} />`）提供更多控制权
 - 两种方式都支持，让使用者选择更适合的写法
@@ -290,6 +281,7 @@ const ref = useMergedRefs(innerRef, forwardedRef)
 ```
 
 **为什么需要合并？**
+
 - 组件内部需要 `innerRef` 来操作 DOM（如测量尺寸）
 - 外部使用者通过 `forwardedRef` 也需要访问 DOM
 - `useMergedRefs` 创建一个代理 ref，同时更新两个目标
@@ -297,18 +289,21 @@ const ref = useMergedRefs(innerRef, forwardedRef)
 **模式 3：加载状态的无障碍处理**
 
 ```tsx
-{loading && (
-  <>
-    <span aria-hidden="true"><Spinner /></span>
-    <VisuallyHidden>{loadingAnnouncement}</VisuallyHidden>
-  </>
-)}
-<span aria-hidden={loading ? 'true' : undefined}>
-  {children}
-</span>
+{
+  loading && (
+    <>
+      <span aria-hidden="true">
+        <Spinner />
+      </span>
+      <VisuallyHidden>{loadingAnnouncement}</VisuallyHidden>
+    </>
+  )
+}
+;<span aria-hidden={loading ? 'true' : undefined}>{children}</span>
 ```
 
 **为什么这样处理？**
+
 - 加载时，原始内容对屏幕阅读器隐藏（`aria-hidden="true"`）
 - 同时提供 `VisuallyHidden` 文字告知屏幕阅读器"正在加载"
 - Spinner 动画也对屏幕阅读器隐藏（纯视觉反馈）
@@ -331,17 +326,17 @@ function inferItemRole(container, selectionVariant, listRole) {
     if (selectionVariant === 'multiple') return 'menuitemcheckbox'
     return 'menuitem'
   }
-  
+
   // 场景 2：在 SelectPanel 中使用
   if (container === 'SelectPanel') {
     return 'option'
   }
-  
+
   // 场景 3：列表设置了 listbox role
   if (listRole === 'listbox') {
     return 'option'
   }
-  
+
   // 场景 4：独立使用
   return undefined
 }
@@ -352,18 +347,18 @@ function inferItemRole(container, selectionVariant, listRole) {
 ```mermaid
 graph TD
     START["ActionList.Item 渲染"] --> CHECK1{"在什么容器中？"}
-    
+
     CHECK1 -->|ActionMenu| CHECK2{"selectionVariant？"}
     CHECK2 -->|single| R1["role='menuitemradio'<br/>aria-checked"]
     CHECK2 -->|multiple| R2["role='menuitemcheckbox'<br/>aria-checked"]
     CHECK2 -->|none| R3["role='menuitem'"]
-    
+
     CHECK1 -->|SelectPanel| R4["role='option'<br/>aria-selected"]
-    
+
     CHECK1 -->|独立使用| CHECK3{"listRole？"}
     CHECK3 -->|listbox| R4
     CHECK3 -->|none| R5["无特殊 role"]
-    
+
     style START fill:#0969da,color:#fff
     style R1 fill:#1a7f37,color:#fff
     style R2 fill:#1a7f37,color:#fff
@@ -396,8 +391,8 @@ css({
       const hash = createHash(name + filename)
       // 拼接最终类名
       return `prc-${dir}-${name}-${hash}`
-    }
-  }
+    },
+  },
 })
 ```
 
@@ -436,7 +431,7 @@ classes.ButtonBase
 function useSlots(children, slotConfig) {
   const slots = {}
   const rest = []
-  
+
   React.Children.forEach(children, child => {
     // 检查每个 child 是否匹配某个 slot
     for (const [slotName, SlotComponent] of Object.entries(slotConfig)) {
@@ -448,7 +443,7 @@ function useSlots(children, slotConfig) {
     // 没有匹配任何 slot，放入剩余列表
     rest.push(child)
   })
-  
+
   return [slots, rest]
 }
 ```
@@ -462,13 +457,13 @@ function ActionListItem({children}) {
     trailingVisual: ActionList.TrailingVisual,
     description: ActionList.Description,
   })
-  
+
   return (
     <li>
-      {slots.leadingVisual}   {/* 放在左侧 */}
-      <span>{otherChildren}</span>  {/* 放在中间 */}
-      {slots.trailingVisual}  {/* 放在右侧 */}
-      {slots.description}     {/* 放在文本下方 */}
+      {slots.leadingVisual} {/* 放在左侧 */}
+      <span>{otherChildren}</span> {/* 放在中间 */}
+      {slots.trailingVisual} {/* 放在右侧 */}
+      {slots.description} {/* 放在文本下方 */}
     </li>
   )
 }
@@ -500,15 +495,15 @@ Slot 模式让组件的子元素布局与书写顺序解耦，更加灵活和健
 
 ## 🎯 总结：核心设计模式一览
 
-| 设计模式 | 应用场景 | 核心代码 | 设计哲学 |
-|---------|---------|---------|---------|
-| Context 分层 | 复合组件状态共享 | `ListContext` → `ItemContext` | 关注点分离 |
-| Data 属性变体 | 组件状态/变体控制 | `data-variant`, `:where()` | 可预测的特异性 |
-| 多态 forwardRef | 灵活的元素类型 | `as` prop + `ForwardRefComponent` | 组合优于继承 |
-| Slot 提取 | 子组件位置管理 | `useSlots` | 声明式布局 |
-| Ref 合并 | 内外 ref 共存 | `useMergedRefs` | 透明的 ref 转发 |
-| SSR Handoff | 服务端状态传递 | `<script type="json">` | 渐进增强 |
-| ARIA 推断 | 无障碍自动化 | Context-based role inference | 内置可访问性 |
+| 设计模式        | 应用场景          | 核心代码                          | 设计哲学        |
+| --------------- | ----------------- | --------------------------------- | --------------- |
+| Context 分层    | 复合组件状态共享  | `ListContext` → `ItemContext`     | 关注点分离      |
+| Data 属性变体   | 组件状态/变体控制 | `data-variant`, `:where()`        | 可预测的特异性  |
+| 多态 forwardRef | 灵活的元素类型    | `as` prop + `ForwardRefComponent` | 组合优于继承    |
+| Slot 提取       | 子组件位置管理    | `useSlots`                        | 声明式布局      |
+| Ref 合并        | 内外 ref 共存     | `useMergedRefs`                   | 透明的 ref 转发 |
+| SSR Handoff     | 服务端状态传递    | `<script type="json">`            | 渐进增强        |
+| ARIA 推断       | 无障碍自动化      | Context-based role inference      | 内置可访问性    |
 
 ---
 

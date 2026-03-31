@@ -16,24 +16,24 @@ graph TB
         S3["--borderColor-default<br/>默认边框色"]
         S4["--bgColor-accent-emphasis<br/>强调背景色"]
     end
-    
+
     subgraph 第二层["🟣 功能/组件层"]
         F1["--button-primary-bgColor-rest<br/>主要按钮静止态背景"]
         F2["--button-primary-bgColor-hover<br/>主要按钮悬停态背景"]
         F3["--control-medium-size<br/>中等控件尺寸"]
     end
-    
+
     subgraph 第一层["⚪ 原始层（设计师定义的）"]
         P1["blue-500: #0969da"]
         P2["blue-600: #0550ae"]
         P3["gray-900: #1f2328"]
     end
-    
+
     S4 --> F1
     F1 --> P1
     F2 --> P2
     S2 --> P3
-    
+
     style S1 fill:#0969da,color:#fff
     style S4 fill:#0969da,color:#fff
     style F1 fill:#8250df,color:#fff
@@ -44,13 +44,14 @@ graph TB
 
 **类比**：想象你在管理一个城市的路灯系统：
 
-| 层级 | 路灯类比 | 设计令牌 |
-|------|---------|---------|
-| 原始层 | 灯泡型号：LED-A19, 60W | `blue-500: #0969da` |
+| 层级   | 路灯类比                   | 设计令牌                        |
+| ------ | -------------------------- | ------------------------------- |
+| 原始层 | 灯泡型号：LED-A19, 60W     | `blue-500: #0969da`             |
 | 功能层 | 路灯类型：主干道灯、小区灯 | `--button-primary-bgColor-rest` |
-| 语义层 | 用途：照明设施 | `--bgColor-accent-emphasis` |
+| 语义层 | 用途：照明设施             | `--bgColor-accent-emphasis`     |
 
 当需要"换灯泡"时：
+
 - 只改**原始层**的值（换新型号灯泡）
 - 功能层和语义层的**名称不变**
 - 所有使用这些令牌的地方**自动更新**
@@ -159,20 +160,20 @@ graph LR
         L2["--fgColor-default = #1f2328"]
         L3["--borderColor-default = #d0d7de"]
     end
-    
+
     subgraph 暗色主题
         D1["--bgColor-default = #0d1117"]
         D2["--fgColor-default = #f0f6fc"]
         D3["--borderColor-default = #30363d"]
     end
-    
+
     subgraph 组件
         C["Button<br/>使用 --bgColor-default<br/>和 --fgColor-default"]
     end
-    
+
     L1 -->|亮色模式| C
     D1 -->|暗色模式| C
-    
+
     style C fill:#0969da,color:#fff
 ```
 
@@ -182,15 +183,15 @@ graph LR
 
 Primer 提供以下预设主题方案：
 
-| 方案名称 | 风格 | 适用场景 |
-|---------|------|---------|
-| `light` | 标准亮色 | 日间默认 |
-| `light_colorblind` | 色盲友好亮色 | 色觉障碍用户 |
+| 方案名称              | 风格         | 适用场景     |
+| --------------------- | ------------ | ------------ |
+| `light`               | 标准亮色     | 日间默认     |
+| `light_colorblind`    | 色盲友好亮色 | 色觉障碍用户 |
 | `light_high_contrast` | 高对比度亮色 | 视力障碍用户 |
-| `dark` | 标准暗色 | 夜间默认 |
-| `dark_dimmed` | 柔和暗色 | 低光环境 |
-| `dark_colorblind` | 色盲友好暗色 | 色觉障碍用户 |
-| `dark_high_contrast` | 高对比度暗色 | 视力障碍用户 |
+| `dark`                | 标准暗色     | 夜间默认     |
+| `dark_dimmed`         | 柔和暗色     | 低光环境     |
+| `dark_colorblind`     | 色盲友好暗色 | 色觉障碍用户 |
+| `dark_high_contrast`  | 高对比度暗色 | 视力障碍用户 |
 
 ### 为什么有色盲友好和高对比度方案？
 
@@ -226,11 +227,11 @@ Primer 定义了三个标准控件尺寸：
 
 对应的令牌：
 
-| 令牌 | 值 | 用途 |
-|------|---|------|
-| `--control-small-size` | 28px | 紧凑场景 |
-| `--control-medium-size` | 32px | 默认尺寸 |
-| `--control-large-size` | 40px | 需要更大点击区域 |
+| 令牌                    | 值   | 用途             |
+| ----------------------- | ---- | ---------------- |
+| `--control-small-size`  | 28px | 紧凑场景         |
+| `--control-medium-size` | 32px | 默认尺寸         |
+| `--control-large-size`  | 40px | 需要更大点击区域 |
 
 ### 内边距
 
@@ -279,11 +280,11 @@ Primer 定义了三个标准控件尺寸：
 
 Primer 提供了 Figma 组件库，其中的样式和变量与代码中的令牌一一对应：
 
-| Figma 样式 | 代码令牌 | 用途 |
-|-----------|---------|------|
-| `fg/default` | `--fgColor-default` | 默认文字 |
-| `bg/default` | `--bgColor-default` | 默认背景 |
-| `border/default` | `--borderColor-default` | 默认边框 |
+| Figma 样式        | 代码令牌                    | 用途     |
+| ----------------- | --------------------------- | -------- |
+| `fg/default`      | `--fgColor-default`         | 默认文字 |
+| `bg/default`      | `--bgColor-default`         | 默认背景 |
+| `border/default`  | `--borderColor-default`     | 默认边框 |
 | `accent/emphasis` | `--bgColor-accent-emphasis` | 强调背景 |
 
 ### 设计师与开发者的沟通
@@ -337,14 +338,14 @@ Primer 提供了 Figma 组件库，其中的样式和变量与代码中的令牌
 
 ## ✅ 本章小结
 
-| 概念 | 核心要点 |
-|------|---------|
-| 三层架构 | 原始层→功能层→语义层，改一处更新全局 |
-| 颜色命名 | `--[角色]-[功能]-[变体]` 的语义化命名 |
-| 交互状态 | rest/hover/active/disabled 四态系统 |
-| 主题切换 | 同名变量不同值，组件自动适应 |
-| 无障碍方案 | 色盲友好 + 高对比度方案 |
-| 设计协作 | 令牌作为设计师与开发者的共同语言 |
+| 概念       | 核心要点                              |
+| ---------- | ------------------------------------- |
+| 三层架构   | 原始层→功能层→语义层，改一处更新全局  |
+| 颜色命名   | `--[角色]-[功能]-[变体]` 的语义化命名 |
+| 交互状态   | rest/hover/active/disabled 四态系统   |
+| 主题切换   | 同名变量不同值，组件自动适应          |
+| 无障碍方案 | 色盲友好 + 高对比度方案               |
+| 设计协作   | 令牌作为设计师与开发者的共同语言      |
 
 ---
 
